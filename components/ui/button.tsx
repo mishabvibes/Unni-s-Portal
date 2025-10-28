@@ -10,11 +10,12 @@ import { cn } from '@/lib/utils'
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'outline' | 'ghost' | 'gradient' | 'neon' | 'terminal'
   size?: 'sm' | 'md' | 'lg'
+  asChild?: boolean // Add asChild prop (for Radix UI compatibility)
   children: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'default', size = 'md', children, ...props }, ref) => {
+  ({ className, variant = 'default', size = 'md', asChild, children, ...props }, ref) => {
     const baseStyles = 'inline-flex items-center justify-center rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
     
     const variants = {
@@ -32,17 +33,27 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'h-14 px-8 text-lg',
     }
 
+    const buttonClasses = cn(
+      baseStyles,
+      variants[variant],
+      sizes[size],
+      className
+    )
+
+    // If asChild is true, render children directly with classes applied
+    if (asChild) {
+      return React.cloneElement(children as React.ReactElement, {
+        className: cn(buttonClasses, (children as React.ReactElement).props?.className),
+      })
+    }
+
+    // Default button rendering
     return (
       <motion.button
         ref={ref}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={cn(
-          baseStyles,
-          variants[variant],
-          sizes[size],
-          className
-        )}
+        className={buttonClasses}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...(props as any)}
       >
