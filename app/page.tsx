@@ -18,6 +18,7 @@ import { useIntersectionObserver } from '@/lib/hooks/use-intersection-observer'
 import ElectricBorder from '@/components/ui/electric-border'
 import Lightning from '@/components/ui/lightning'
 import GlitchText from '@/components/ui/glitch-text'
+import ScrambledText from '@/components/ui/scrambled-text'
 
 /**
  * Home Page - Professional Portfolio Homepage
@@ -28,7 +29,7 @@ import GlitchText from '@/components/ui/glitch-text'
 const techStack = {
   frontend: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
   backend: ['Node.js', 'Django', 'Python', 'Express'],
-  database: ['MongoDB', 'PostgreSQL', 'Firebase'],
+  database: ['MongoDB', 'PostgreSQL', 'Firebase','Supabase'],
   tools: ['Git', 'Docker', 'VS Code', 'Figma'],
 }
 
@@ -120,7 +121,7 @@ export default function HomePage() {
   return (
     <div className="relative">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen py-12 md:py-0 flex items-center justify-center overflow-hidden">
         {/* Lightning Background Effect */}
         <div className="absolute inset-0 opacity-30">
           <Lightning
@@ -136,27 +137,27 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-10" />
         </motion.div>
 
-        {/* Hero content */}
+      {/* Hero content */}
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-5xl mx-auto text-center">
             {/* Status Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
               className="mb-6 flex justify-center"
             >
               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass neon-border">
                 <StatusBadge status="online" showText={false} />
                 <span className="text-sm font-mono text-terminal-green">AVAILABLE FOR PROJECTS</span>
               </div>
-            </motion.div>
+          </motion.div>
 
             {/* Main heading with typing effect */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-6"
             >
               <div className="mb-4 flex justify-center">
@@ -174,22 +175,29 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Tagline */}
-            <motion.p
+            {/* Tagline with Scrambled Text Effect */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed"
             >
-              Transforming ideas into elegant digital solutions. Specializing in modern web development
-              with <span className="text-primary font-semibold">React</span>, <span className="text-primary font-semibold">Next.js</span>, and <span className="text-primary font-semibold">Django</span>.
-            </motion.p>
+              <ScrambledText
+                radius={120}
+                duration={0.8}
+                speed={0.5}
+                scrambleChars=".:!@#$%^&*()01<>/?"
+                className="text-muted-foreground text-center"
+              >
+                Transforming ideas into elegant digital solutions. Specializing in modern web development with React, Next.js, and Django.
+              </ScrambledText>
+            </motion.div>
 
             {/* Location & Company */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
               className="mb-10 flex flex-wrap items-center justify-center gap-3"
             >
               <Badge className="px-4 py-2 text-sm bg-matrix-green/10 border-matrix-green/30 text-matrix-green">
@@ -201,16 +209,16 @@ export default function HomePage() {
               <Badge className="px-4 py-2 text-sm bg-neon-pink/10 border-neon-pink/30 text-neon-pink">
                 <span className="mr-2">⚡</span> 3+ Years Experience
               </Badge>
-            </motion.div>
+          </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-            >
-              <Link href="/projects">
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          >
+            <Link href="/projects">
                 <Button size="lg" variant="default" className="group min-w-[200px]">
                   <Rocket className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
                   View Projects
@@ -220,41 +228,41 @@ export default function HomePage() {
                 <Button size="lg" variant="neon" className="group min-w-[200px]">
                   <TerminalIcon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Launch Terminal
-                </Button>
-              </Link>
-              <Link href="/contact">
+              </Button>
+            </Link>
+            <Link href="/contact">
                 <Button size="lg" variant="outline" className="group min-w-[200px]">
-                  <Mail className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
+                <Mail className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Get in Touch
-                </Button>
-              </Link>
-            </motion.div>
+              </Button>
+            </Link>
+          </motion.div>
 
-            {/* Social links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+          {/* Social links */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1 }}
               className="flex gap-4 justify-center mb-20"
-            >
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
+          >
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: 1 + index * 0.1 }}
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
                   className={`h-14 w-14 rounded-full glass neon-border flex items-center justify-center transition-all ${social.color}`}
-                  aria-label={social.label}
-                >
+                aria-label={social.label}
+              >
                   <social.icon className="h-6 w-6" />
-                </motion.a>
-              ))}
-            </motion.div>
+              </motion.a>
+            ))}
+          </motion.div>
 
             {/* Scroll indicator */}
             <motion.div
@@ -276,9 +284,9 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 relative">
+      <section className="py-12 sm:py-16 lg:py-20 relative">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
             <AnimatedCounter value="39+" label="GitHub Repos" delay={0} />
             <AnimatedCounter value="15+" label="Projects Delivered" delay={0.1} />
             <AnimatedCounter value="10+" label="Technologies" delay={0.2} />
@@ -288,10 +296,10 @@ export default function HomePage() {
       </section>
 
       {/* Terminal Demo Section - Enhanced Scroll Reveal */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
           {/* Header with Advanced Scroll Reveal */}
-          <div className="max-w-3xl mx-auto text-center mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
             {/* Title - Slide from top with scale */}
             <motion.h2
               initial={{ opacity: 0, y: -50, scale: 0.9 }}
@@ -301,7 +309,7 @@ export default function HomePage() {
                 duration: 0.7,
                 ease: [0.22, 1, 0.36, 1]
               }}
-              className="text-4xl md:text-5xl font-bold mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
             >
               <span className="gradient-text">Interactive Experience</span>
             </motion.h2>
@@ -411,7 +419,7 @@ export default function HomePage() {
               {/* Kali Linux Terminal */}
               <div className="relative z-10">
                 <KaliTerminalDemo />
-              </div>
+            </div>
             </motion.div>
 
             {/* Link to full terminal - Bounce in from bottom */}
@@ -467,7 +475,7 @@ export default function HomePage() {
             </motion.span>
           </motion.div>
           
-          <motion.div
+            <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.1 }}
             viewport={{ once: true }}
@@ -523,7 +531,7 @@ export default function HomePage() {
                   <CardHeader>
                     <div className={`h-14 w-14 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <item.icon className="h-7 w-7 text-white" />
-                    </div>
+                </div>
                     <CardTitle className="text-xl group-hover:text-primary transition-colors">
                       {item.title}
                     </CardTitle>
@@ -588,24 +596,24 @@ export default function HomePage() {
       </section>
 
       {/* Featured Projects Section */}
-      <section className="py-20 relative">
+      <section className="py-16 sm:py-20 relative">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center mb-16"
+            className="max-w-3xl mx-auto text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
               Featured <span className="gradient-text">Projects</span>
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-base sm:text-lg px-4">
               Some of my recent work that I'm proud of
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
             {featuredProjects.map((project, index) => {
               // Center card (index 1) has permanent electrical effect
               const isCenterCard = index === 1
@@ -791,7 +799,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </motion.div>
-        </div>
+      </div>
       </section>
     </div>
   )

@@ -88,7 +88,7 @@ function SkillBar({ name, level, category, icon, delay }: { name: string; level:
         </div>
         <span className="text-sm text-muted-foreground font-mono">{level}%</span>
       </div>
-      <div className="h-3 bg-secondary rounded-full overflow-hidden">
+      <div className="h-[0.10rem] bg-secondary rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={isVisible ? { width: `${level}%` } : { width: 0 }}
@@ -138,12 +138,12 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center"
           >
-            <div className="relative w-full max-w-md aspect-square">
-              <HolographicCard>
-                <div className="relative h-full flex flex-col items-center justify-center p-5">
+          <div className="relative w-full max-w-xs sm:max-w-md aspect-square">
+          <HolographicCard>
+                <div className="relative h-full flex flex-col items-center justify-center p-4 sm:p-5">
                   {/* Skull Avatar */}
                   <motion.div 
-                    className="relative w-56 h-56 md:w-72 md:h-72 mb-5"
+                    className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 mb-4 sm:mb-5"
                     animate={{ 
                       filter: [
                         'drop-shadow(0 0 35px rgba(0, 255, 0, 0.65))',
@@ -165,18 +165,18 @@ export default function AboutPage() {
                   </motion.div>
                   
                   {/* Name */}
-                  <h3 className="component-title text-2xl md:text-3xl mb-2">
+                  <h3 className="component-title text-xl sm:text-2xl md:text-3xl mb-2">
                     MISHAB
                   </h3>
                   
                   {/* Subtitle */}
-                  <p className="text-cyber-cyan text-sm md:text-base font-mono">
+                  <p className="text-cyber-cyan text-xs sm:text-sm md:text-base font-mono">
                     Full-Stack Developer
                   </p>
                   
                   {/* Floating badges */}
                   <motion.div
-                    className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-matrix-green/20 border border-matrix-green/40 text-matrix-green text-xs font-medium backdrop-blur-sm"
+                    className="absolute top-2 right-2 sm:top-4 sm:right-4 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-matrix-green/20 border border-matrix-green/40 text-matrix-green text-[10px] sm:text-xs font-medium backdrop-blur-sm"
                     animate={{ y: [0, -9, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >

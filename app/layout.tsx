@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { SmoothCursor } from '@/components/ui/smooth-cursor'
 import { HackerCursorSVG } from '@/components/ui/hacker-cursor'
 import { CyberGrid } from '@/components/ui/cyber-grid'
 import { AccessGranted } from '@/components/ui/access-granted'
+import { DockTabs } from '@/components/ui/dock-tabs'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -100,9 +100,9 @@ export default function RootLayout({
           <CyberGrid />
           <SmoothCursor cursor={<HackerCursorSVG />} />
           <div className="flex flex-col min-h-screen scanlines relative z-10">
-            <Navigation />
-            <main className="flex-1 pt-16">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
+            <DockTabs />
           </div>
         </ThemeProvider>
       </body>

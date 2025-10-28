@@ -11,8 +11,10 @@ import { getPostBySlug } from '@/lib/blog'
 import { formatDate } from '@/lib/utils'
 
 /**
- * Individual blog post page
+ * Individual blog post page with dynamic rendering
  */
+export const dynamic = 'force-dynamic'
+
 export default function BlogPostPage() {
   const params = useParams()
   const post = getPostBySlug(params.slug as string)

@@ -1,32 +1,71 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Menu, X, Sparkles } from 'lucide-react'
+import { Menu, X, Sparkles, Home, User, Briefcase, FileText, Terminal as TerminalIcon, Mail } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { ThemeToggle } from './theme-toggle'
 import { cn } from '@/lib/utils'
 import { useScrollProgress } from '@/lib/hooks/use-scroll-progress'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 
 /**
- * Main navigation component with scroll progress indicator
+ * Main navigation component with scroll progress indicator and breadcrumbs
  * Enhanced with personality for Mishab's portfolio
  */
 const navLinks = [
-  { href: '/', label: 'Home', emoji: '🏠' },
-  { href: '/about', label: 'About', emoji: '👨‍💻' },
-  { href: '/projects', label: 'Projects', emoji: '🚀' },
-  { href: '/blog', label: 'Blog', emoji: '📝' },
-  { href: '/terminal', label: 'Terminal', emoji: '💻' },
-  { href: '/contact', label: 'Contact', emoji: '📧' },
+  { href: '/', label: 'Home', emoji: '🏠', icon: Home },
+  { href: '/about', label: 'About', emoji: '👨‍💻', icon: User },
+  { href: '/projects', label: 'Projects', emoji: '🚀', icon: Briefcase },
+  { href: '/blog', label: 'Blog', emoji: '📝', icon: FileText },
+  { href: '/terminal', label: 'Terminal', emoji: '💻', icon: TerminalIcon },
+  { href: '/contact', label: 'Contact', emoji: '📧', icon: Mail },
 ]
+
+// Get breadcrumb path from pathname
+function getBreadcrumbPath(pathname: string) {
+  const paths = pathname.split('/').filter(Boolean)
+  const breadcrumbs = [{ href: '/', label: 'Home', icon: Home }]
+  
+  let currentPath = ''
+  paths.forEach((path) => {
+    currentPath += `/${path}`
+    const navLink = navLinks.find(link => link.href === currentPath)
+    if (navLink) {
+      breadcrumbs.push({
+        href: navLink.href,
+        label: navLink.label,
+        icon: navLink.icon
+      })
+    } else {
+      // For dynamic routes like /blog/[slug]
+      breadcrumbs.push({
+        href: currentPath,
+        label: path.charAt(0).toUpperCase() + path.slice(1),
+        icon: FileText
+      })
+    }
+  })
+  
+  return breadcrumbs
+}
 
 export function Navigation() {
   const pathname = usePathname()
   const scrollProgress = useScrollProgress()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const breadcrumbs = getBreadcrumbPath(pathname)
+  const showBreadcrumbs = pathname !== '/' // Always show on non-home pages
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +89,7 @@ export function Navigation() {
         animate={{ y: 0 }}
         className={cn(
           'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
-          isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+          isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm border-b border-matrix-green/10' : 'bg-transparent'
         )}
       >
         <div className="container mx-auto px-4">
@@ -124,6 +163,52 @@ export function Navigation() {
               </motion.button>
             </div>
           </div>
+
+          {/* Breadcrumbs - Always visible on non-home pages */}
+          {showBreadcrumbs && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="pb-3 border-t border-matrix-green/20 pt-3 bg-gradient-to-r from-transparent via-matrix-green/5 to-transparent"
+            >
+              <Breadcrumb>
+                <BreadcrumbList className="text-sm">
+                  {breadcrumbs.map((crumb, index) => {
+                    const isLast = index === breadcrumbs.length - 1
+                    const Icon = crumb.icon
+                    
+                    return (
+                      <React.Fragment key={crumb.href}>
+                        <BreadcrumbItem>
+                          {isLast ? (
+                            <BreadcrumbPage className="inline-flex items-center gap-2 text-matrix-green font-semibold">
+                              <Icon className="w-4 h-4" />
+                              {crumb.label}
+                            </BreadcrumbPage>
+                          ) : (
+                            <BreadcrumbLink 
+                              href={crumb.href}
+                              className="inline-flex items-center gap-2 text-muted-foreground hover:text-matrix-green transition-colors hover:scale-105 transform"
+                            >
+                              <Icon className="w-4 h-4" />
+                              {crumb.label}
+                            </BreadcrumbLink>
+                          )}
+                        </BreadcrumbItem>
+                        {!isLast && (
+                          <BreadcrumbSeparator>
+                            <span className="text-matrix-green font-bold">/</span>
+                          </BreadcrumbSeparator>
+                        )}
+                      </React.Fragment>
+                    )
+                  })}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </motion.div>
+          )}
         </div>
 
         {/* Mobile Navigation */}

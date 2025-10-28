@@ -10,7 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Mail, MapPin, Github, Send, CheckCircle, Loader2, Instagram, Linkedin, Code2, Coffee, Zap } from 'lucide-react'
+import { Mail, MapPin, Github, Send, CheckCircle, Loader2, Instagram, Linkedin, Code2, Coffee, Zap, Target } from 'lucide-react'
+import { DottedMap } from '@/components/ui/dotted-map'
 
 /**
  * Contact Page - Get in touch with Mishab!
@@ -212,7 +213,7 @@ export default function ContactPage() {
             </div>
 
             {/* Availability status */}
-            <Card className="glass border-2 border-green-500/20">
+            {/* <Card className="glass border-2 border-green-500/20">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3">
                   <div className="relative">
@@ -233,10 +234,10 @@ export default function ContactPage() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Fun fact */}
-            <Card className="glass">
+            {/* <Card className="glass">
               <CardContent className="p-6 text-center">
                 <div className="text-4xl mb-3">⚡</div>
                 <p className="text-sm text-muted-foreground">
@@ -244,7 +245,7 @@ export default function ContactPage() {
                   in your message for a faster reply! ☕😄
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </motion.div>
 
           {/* Contact Form */}
@@ -409,6 +410,157 @@ export default function ContactPage() {
             </Card>
           </motion.div>
         </div>
+      </Section>
+
+      {/* Location Map Section */}
+      <Section className="mt-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-5xl mx-auto"
+        >
+          <div className="text-center mb-8">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 mb-4"
+            >
+              <Target className="h-6 w-6 text-matrix-green" />
+              <h2 className="text-3xl font-bold">
+                <span className="gradient-text">Target Location</span>
+              </h2>
+            </motion.div>
+            <p className="text-muted-foreground text-lg">
+              Based in Palakkad, Kerala, India 🇮🇳
+            </p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Card className="relative overflow-hidden border-2 border-matrix-green/30 bg-black/60 backdrop-blur-sm">
+              {/* Scanlines overlay */}
+              <div className="scanlines absolute inset-0 pointer-events-none opacity-20" />
+              
+              {/* Cyber grid background */}
+              <div className="absolute inset-0 cyber-grid opacity-5" />
+
+              <CardContent className="p-0 relative">
+                {/* Map Container */}
+                <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full">
+                  {/* Pulsing crosshair overlay */}
+                  <motion.div
+                    animate={{
+                      opacity: [0.3, 0.7, 0.3],
+                      scale: [0.98, 1.02, 0.98],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center"
+                  >
+                    <div className="relative">
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <div className="w-16 h-16 border-2 border-matrix-green rounded-full opacity-50" />
+                      </div>
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <div className="w-24 h-24 border border-matrix-green/30 rounded-full" />
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Map */}
+                  <DottedMap
+                    width={200}
+                    height={100}
+                    mapSamples={8000}
+                    markers={[
+                      {
+                        lat: 10.8505,  // Palakkad, Kerala latitude
+                        lng: 76.2711,  // Palakkad, Kerala longitude
+                        size: 0.8,
+                      },
+                    ]}
+                    dotRadius={0.15}
+                    markerColor="#00ff00"
+                    className="text-matrix-green/40"
+                  />
+
+                  {/* Corner brackets (hacker UI) */}
+                  <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-matrix-green/60" />
+                  <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-matrix-green/60" />
+                  <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-matrix-green/60" />
+                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-matrix-green/60" />
+                </div>
+
+                {/* Location Info Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 sm:p-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                    <div>
+                      <div className="text-xs text-cyber-cyan font-mono mb-1">
+                        TARGET ACQUIRED
+                      </div>
+                      <div className="text-base sm:text-lg font-bold text-matrix-green font-mono">
+                        10.8505°N, 76.2711°E
+                      </div>
+                      <div className="text-xs sm:text-sm text-muted-foreground font-mono">
+                        Palakkad, Kerala, India
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <motion.div
+                        animate={{
+                          opacity: [0.3, 1, 0.3],
+                          scale: [1, 1.2, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="w-3 h-3 rounded-full bg-matrix-green shadow-[0_0_10px_rgba(0,255,0,0.8)]"
+                      />
+                      <span className="text-xs text-matrix-green font-mono font-bold">
+                        ONLINE
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* System Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-4 text-center"
+            >
+              <div className="inline-block bg-black/60 border border-matrix-green/20 rounded-lg px-3 sm:px-6 py-2 sm:py-3 font-mono text-[10px] sm:text-xs text-muted-foreground backdrop-blur-sm max-w-full overflow-x-auto">
+                <div className="flex flex-wrap items-center justify-center gap-x-1 sm:gap-x-2 gap-y-1">
+                  <span className="text-matrix-green">[</span>
+                  <span className="text-cyber-cyan whitespace-nowrap">SYSTEM</span>
+                  <span className="text-matrix-green">]</span>
+                  <span className="text-matrix-green/50">:</span>
+                  <span className="text-terminal-green whitespace-nowrap">Tracking Active</span>
+                  <span className="text-matrix-green/50 hidden sm:inline">|</span>
+                  <span className="whitespace-nowrap">Timezone: IST</span>
+                  <span className="text-matrix-green/50 hidden sm:inline">|</span>
+                  <span className="whitespace-nowrap">Region: South Asia</span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </Section>
 
       {/* FAQ Section */}
