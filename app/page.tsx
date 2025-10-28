@@ -606,51 +606,128 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {featuredProjects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <ElectricBorder
-                  color="#00ff00"
-                  speed={1.5}
-                  chaos={0.5}
-                  thickness={2}
-                  style={{ borderRadius: 12, height: '100%' }}
-                  className="h-full"
+            {featuredProjects.map((project, index) => {
+              // Center card (index 1) has permanent electrical effect
+              const isCenterCard = index === 1
+              
+              return (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="h-full glass border border-matrix-green/20 group hover:shadow-2xl hover:shadow-matrix-green/30 transition-all duration-500 bg-black/50 hover:border-matrix-green/40 hover:scale-[1.02]">
-                    <CardHeader>
-                      <div className={`h-2 w-full bg-gradient-to-r ${project.gradient} rounded-t-lg mb-4 opacity-80 group-hover:opacity-100 transition-opacity`} />
-                      <CardTitle className="text-xl group-hover:text-matrix-green transition-colors">
-                        {project.title}
-                      </CardTitle>
-                      <CardDescription className="text-muted-foreground group-hover:text-foreground transition-colors">
-                        {project.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tech.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs bg-matrix-green/10 border-matrix-green/30 text-matrix-green group-hover:bg-matrix-green/20 group-hover:border-matrix-green/50 transition-all">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      <Link href={project.link}>
-                        <Button variant="ghost" className="w-full group/btn hover:bg-matrix-green/10 hover:text-matrix-green">
-                          <span>View Project</span>
-                          <ExternalLink className="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                </ElectricBorder>
-              </motion.div>
-            ))}
+                  {isCenterCard ? (
+                    // Center card - Always active electrical border with enhanced glow
+                    <div className="h-full relative">
+                      {/* Permanent glow effect for center card */}
+                      <motion.div
+                        animate={{
+                          boxShadow: [
+                            '0 0 40px rgba(0, 255, 0, 0.3)',
+                            '0 0 60px rgba(0, 255, 255, 0.4)',
+                            '0 0 40px rgba(0, 255, 0, 0.3)',
+                          ]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="absolute -inset-2 rounded-xl blur-xl opacity-60 pointer-events-none"
+                        style={{ background: 'linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2))' }}
+                      />
+                      
+                      <ElectricBorder
+                        color="#00ff00"
+                        speed={1.5}
+                        chaos={0.5}
+                        thickness={2}
+                        style={{ borderRadius: 12, height: '100%' }}
+                        className="h-full permanent-active"
+                        alwaysActive={true}
+                      >
+                        <Card className="h-full glass border border-matrix-green/40 group shadow-2xl shadow-matrix-green/30 bg-black/60 scale-[1.02] relative">
+                          {/* Featured badge */}
+                          <motion.div
+                            animate={{ opacity: [0.7, 1, 0.7] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="absolute top-4 right-4 z-10"
+                          >
+                            <Badge className="bg-matrix-green/20 border-matrix-green text-matrix-green font-bold text-xs">
+                              ⚡ FEATURED
+                            </Badge>
+                          </motion.div>
+                          
+                          <CardHeader>
+                            <div className={`h-2 w-full bg-gradient-to-r ${project.gradient} rounded-t-lg mb-4 opacity-100 transition-opacity`} />
+                            <CardTitle className="text-xl text-matrix-green transition-colors">
+                              {project.title}
+                            </CardTitle>
+                            <CardDescription className="text-foreground transition-colors">
+                              {project.description}
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {project.tech.map((tech) => (
+                                <Badge key={tech} variant="secondary" className="text-xs bg-matrix-green/20 border-matrix-green/50 text-matrix-green transition-all">
+                                  {tech}
+                                </Badge>
+                              ))}
+                            </div>
+                            <Link href={project.link}>
+                              <Button variant="ghost" className="w-full group/btn hover:bg-matrix-green/10 hover:text-matrix-green">
+                                <span>View Project</span>
+                                <ExternalLink className="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                              </Button>
+                            </Link>
+                          </CardContent>
+                        </Card>
+                      </ElectricBorder>
+                    </div>
+                  ) : (
+                    // Other cards - Hover-activated electrical border
+                    <ElectricBorder
+                      color="#00ff00"
+                      speed={1.5}
+                      chaos={0.5}
+                      thickness={2}
+                      style={{ borderRadius: 12, height: '100%' }}
+                      className="h-full"
+                    >
+                      <Card className="h-full glass border border-matrix-green/20 group hover:shadow-2xl hover:shadow-matrix-green/30 transition-all duration-500 bg-black/50 hover:border-matrix-green/40 hover:scale-[1.02]">
+                        <CardHeader>
+                          <div className={`h-2 w-full bg-gradient-to-r ${project.gradient} rounded-t-lg mb-4 opacity-80 group-hover:opacity-100 transition-opacity`} />
+                          <CardTitle className="text-xl group-hover:text-matrix-green transition-colors">
+                            {project.title}
+                          </CardTitle>
+                          <CardDescription className="text-muted-foreground group-hover:text-foreground transition-colors">
+                            {project.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tech.map((tech) => (
+                              <Badge key={tech} variant="secondary" className="text-xs bg-matrix-green/10 border-matrix-green/30 text-matrix-green group-hover:bg-matrix-green/20 group-hover:border-matrix-green/50 transition-all">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                          <Link href={project.link}>
+                            <Button variant="ghost" className="w-full group/btn hover:bg-matrix-green/10 hover:text-matrix-green">
+                              <span>View Project</span>
+                              <ExternalLink className="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                            </Button>
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    </ElectricBorder>
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
 
           <motion.div

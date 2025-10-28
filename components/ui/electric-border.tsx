@@ -11,6 +11,7 @@ type ElectricBorderProps = PropsWithChildren<{
   thickness?: number;
   className?: string;
   style?: CSSProperties;
+  alwaysActive?: boolean; // New prop to make it permanently active
 }>;
 
 function hexToRgba(hex: string, alpha = 1): string {
@@ -36,14 +37,15 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   chaos = 1,
   thickness = 2,
   className,
-  style
+  style,
+  alwaysActive = false
 }) => {
   const rawId = useId().replace(/[:]/g, '');
   const filterId = `turbulent-displace-${rawId}`;
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const strokeRef = useRef<HTMLDivElement | null>(null);
-  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHovered, setIsHovered] = React.useState(alwaysActive); // Initialize with alwaysActive value
 
   const updateAnim = () => {
     const svg = svgRef.current;
@@ -150,8 +152,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       ref={rootRef} 
       className={'relative isolate ' + (className ?? '')} 
       style={style}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !alwaysActive && setIsHovered(true)}
+      onMouseLeave={() => !alwaysActive && setIsHovered(false)}
     >
       <svg
         ref={svgRef}
@@ -199,7 +201,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
         className="absolute inset-0 pointer-events-none transition-opacity duration-500" 
         style={{
           ...inheritRadius,
-          opacity: isHovered ? 1 : 0
+          opacity: (isHovered || alwaysActive) ? 1 : 0
         }}
       >
         <div ref={strokeRef} className="absolute inset-0 box-border" style={strokeStyle} />
