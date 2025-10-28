@@ -8,6 +8,7 @@ import { HackerCursorSVG } from '@/components/ui/hacker-cursor'
 import { CyberGrid } from '@/components/ui/cyber-grid'
 import { AccessGranted } from '@/components/ui/access-granted'
 import { DockTabs } from '@/components/ui/dock-tabs'
+import { MusicToggle } from '@/components/ui/music-toggle'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -98,7 +99,12 @@ export default function RootLayout({
         >
           <AccessGranted />
           <CyberGrid />
-          <SmoothCursor cursor={<HackerCursorSVG />} />
+          {/* Hide custom cursor on mobile, show only on desktop */}
+          <div className="hidden md:block">
+            <SmoothCursor cursor={<HackerCursorSVG />} />
+          </div>
+          {/* Simple Music Toggle */}
+          <MusicToggle />
           <div className="flex flex-col min-h-screen scanlines relative z-10">
             <main className="flex-1">{children}</main>
             <Footer />

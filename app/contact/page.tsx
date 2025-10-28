@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,7 +11,9 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Mail, MapPin, Github, Send, CheckCircle, Loader2, Instagram, Linkedin, Code2, Coffee, Zap, Target } from 'lucide-react'
-import { DottedMap } from '@/components/ui/dotted-map'
+
+// Lazy load the heavy DottedMap component for better performance
+const DottedMap = lazy(() => import('@/components/ui/dotted-map').then(module => ({ default: module.DottedMap })))
 
 /**
  * Contact Page - Get in touch with Mishab!
@@ -439,60 +441,51 @@ export default function ContactPage() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3 }}
           >
             <Card className="relative overflow-hidden border-2 border-matrix-green/30 bg-black/60 backdrop-blur-sm">
-              {/* Scanlines overlay */}
-              <div className="scanlines absolute inset-0 pointer-events-none opacity-20" />
-              
-              {/* Cyber grid background */}
-              <div className="absolute inset-0 cyber-grid opacity-5" />
+              {/* Removed scanlines for performance */}
 
               <CardContent className="p-0 relative">
                 {/* Map Container */}
                 <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full">
-                  {/* Pulsing crosshair overlay */}
-                  <motion.div
-                    animate={{
-                      opacity: [0.3, 0.7, 0.3],
-                      scale: [0.98, 1.02, 0.98],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center"
-                  >
+                  {/* Static crosshair overlay - No animation for better performance */}
+                  <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center opacity-50">
                     <div className="relative">
                       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <div className="w-16 h-16 border-2 border-matrix-green rounded-full opacity-50" />
-                      </div>
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <div className="w-24 h-24 border border-matrix-green/30 rounded-full" />
+                        <div className="w-16 h-16 border-2 border-matrix-green rounded-full" />
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* Map */}
-                  <DottedMap
-                    width={200}
-                    height={100}
-                    mapSamples={8000}
-                    markers={[
-                      {
-                        lat: 10.8505,  // Palakkad, Kerala latitude
-                        lng: 76.2711,  // Palakkad, Kerala longitude
-                        size: 0.8,
+                  {/* Map - Lazy loaded for better performance */}
+                  <Suspense fallback={
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+                      <div className="flex flex-col items-center gap-3">
+                        <Loader2 className="h-8 w-8 animate-spin text-matrix-green" />
+                        <span className="text-sm text-matrix-green font-mono">LOADING MAP...</span>
+                      </div>
+                    </div>
+                  }>
+                    <DottedMap
+                      width={200}
+                      height={100}
+                      mapSamples={1500}
+                      markers={[
+                        {
+                          lat: 10.8505,  // Palakkad, Kerala latitude
+                          lng: 76.2711,  // Palakkad, Kerala longitude
+                          size: 0.8,
                       },
                     ]}
                     dotRadius={0.15}
                     markerColor="#00ff00"
                     className="text-matrix-green/40"
                   />
+                  </Suspense>
 
                   {/* Corner brackets (hacker UI) */}
                   <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-matrix-green/60" />
@@ -516,18 +509,7 @@ export default function ContactPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <motion.div
-                        animate={{
-                          opacity: [0.3, 1, 0.3],
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        className="w-3 h-3 rounded-full bg-matrix-green shadow-[0_0_10px_rgba(0,255,0,0.8)]"
-                      />
+                      <div className="w-3 h-3 rounded-full bg-matrix-green shadow-[0_0_10px_rgba(0,255,0,0.8)]" />
                       <span className="text-xs text-matrix-green font-mono font-bold">
                         ONLINE
                       </span>

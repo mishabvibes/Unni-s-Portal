@@ -216,7 +216,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            className="hidden md:flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
             <Link href="/projects">
                 <Button size="lg" variant="default" className="group min-w-[200px]">
