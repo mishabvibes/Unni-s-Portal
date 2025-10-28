@@ -16,58 +16,67 @@ export function MusicToggle({
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
-  const hasAttemptedAutoplay = useRef(false)
 
-  // Try autoplay on mount and user interaction
+  // Setup audio and autoplay
   useEffect(() => {
-    const attemptAutoplay = async () => {
-      if (!audioRef.current || hasAttemptedAutoplay.current) return
-      
-      hasAttemptedAutoplay.current = true
-      audioRef.current.volume = defaultVolume
-      audioRef.current.loop = true
+    const audio = audioRef.current
+    if (!audio) return
 
+    // Configure audio
+    audio.volume = defaultVolume
+    audio.loop = true
+
+    // Multiple autoplay attempts
+    const playAudio = async () => {
       try {
-        await audioRef.current.play()
+        await audio.play()
         setIsPlaying(true)
-        console.log('🎵 Music autoplay started!')
-      } catch (error) {
-        console.log('🎵 Autoplay blocked. Waiting for user interaction...')
-        setIsPlaying(false)
+        console.log('🎵 MUSIC PLAYING!')
+        return true
+      } catch (err) {
+        console.log('🎵 Autoplay blocked:', err)
+        return false
       }
     }
 
-    // Try after a delay
-    const timer = setTimeout(attemptAutoplay, 1500)
+    // Attempt 1: Immediate
+    playAudio()
 
-    // Also try on first user interaction
-    const handleInteraction = async () => {
-      if (!isPlaying && audioRef.current) {
-        try {
-          await audioRef.current.play()
-          setIsPlaying(true)
-          console.log('🎵 Music started on user interaction!')
-        } catch (error) {
-          console.log('🎵 Could not start music')
-        }
+    // Attempt 2: After 100ms
+    const timer1 = setTimeout(playAudio, 100)
+
+    // Attempt 3: After 500ms
+    const timer2 = setTimeout(playAudio, 500)
+
+    // Attempt 4: After 1 second
+    const timer3 = setTimeout(playAudio, 1000)
+
+    // Setup interaction handlers as fallback
+    const startOnInteraction = async () => {
+      const success = await playAudio()
+      if (success) {
+        // Remove all event listeners after successful play
+        events.forEach(event => {
+          document.removeEventListener(event, startOnInteraction)
+        })
       }
-      // Remove listeners after first attempt
-      document.removeEventListener('click', handleInteraction)
-      document.removeEventListener('keydown', handleInteraction)
-      document.removeEventListener('touchstart', handleInteraction)
     }
 
-    document.addEventListener('click', handleInteraction, { once: true })
-    document.addEventListener('keydown', handleInteraction, { once: true })
-    document.addEventListener('touchstart', handleInteraction, { once: true })
+    const events = ['click', 'touchstart', 'mousedown', 'keydown', 'scroll', 'mousemove']
+    events.forEach(event => {
+      document.addEventListener(event, startOnInteraction, { passive: true })
+    })
 
+    // Cleanup
     return () => {
-      clearTimeout(timer)
-      document.removeEventListener('click', handleInteraction)
-      document.removeEventListener('keydown', handleInteraction)
-      document.removeEventListener('touchstart', handleInteraction)
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      events.forEach(event => {
+        document.removeEventListener(event, startOnInteraction)
+      })
     }
-  }, [defaultVolume, isPlaying])
+  }, [defaultVolume])
 
   const toggleMusic = async () => {
     if (!audioRef.current) return
@@ -100,13 +109,19 @@ export function MusicToggle({
 
   return (
     <>
-      <audio ref={audioRef} src={audioSrc} preload="auto" />
+      <audio 
+        ref={audioRef} 
+        src={audioSrc} 
+        preload="auto"
+        playsInline
+        muted={false}
+      />
       
       {/* Vertical Music Toggle - Left Side */}
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
         className="fixed left-4 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2"
       >
         {/* Main Toggle Button */}
