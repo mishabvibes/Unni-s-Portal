@@ -287,61 +287,207 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Terminal Demo Section */}
-      <section className="py-20 relative">
+      {/* Terminal Demo Section - Enhanced Scroll Reveal */}
+      <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          {/* Header with Advanced Scroll Reveal */}
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            {/* Title - Slide from top with scale */}
+            <motion.h2
+              initial={{ opacity: 0, y: -50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.7,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="text-4xl md:text-5xl font-bold mb-4"
+            >
               <span className="gradient-text">Interactive Experience</span>
-            </h2>
-            <p className="text-muted-foreground text-lg mb-4">
-              Experience my portfolio through realistic terminal interfaces
-            </p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              <Badge className="bg-matrix-green/10 border-matrix-green/30 text-matrix-green">
-                Kali Linux Style
-              </Badge>
-              <Badge className="bg-cyber-cyan/10 border-cyber-cyan/30 text-cyber-cyan">
-                Live Typing Animation
-              </Badge>
-              <Badge className="bg-neon-pink/10 border-neon-pink/30 text-neon-pink">
-                Realistic Terminal
-              </Badge>
-            </div>
-          </motion.div>
+            </motion.h2>
 
+            {/* Description - Fade and slide from bottom */}
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.6,
+                delay: 0.15,
+                ease: "easeOut"
+              }}
+              className="text-muted-foreground text-lg mb-4"
+            >
+              Experience my portfolio through realistic terminal interfaces
+            </motion.p>
+
+            {/* Badges - Staggered slide from left and right */}
+            <div className="flex gap-2 justify-center flex-wrap">
+              <motion.div
+                initial={{ opacity: 0, x: -50, rotate: -5 }}
+                whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.25,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <Badge className="bg-matrix-green/10 border-matrix-green/30 text-matrix-green hover:scale-110 transition-transform cursor-default">
+                  Kali Linux Style
+                </Badge>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.35,
+                  ease: "backOut"
+                }}
+              >
+                <Badge className="bg-cyber-cyan/10 border-cyber-cyan/30 text-cyber-cyan hover:scale-110 transition-transform cursor-default">
+                  Live Typing Animation
+                </Badge>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 50, rotate: 5 }}
+                whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.45,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <Badge className="bg-neon-pink/10 border-neon-pink/30 text-neon-pink hover:scale-110 transition-transform cursor-default">
+                  Realistic Terminal
+                </Badge>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Terminal - Slide from bottom with scale and glow effect */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 80, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.2,
+              ease: [0.22, 1, 0.36, 1]
+            }}
             className="max-w-5xl mx-auto"
           >
-            {/* Kali Linux Terminal */}
-            <KaliTerminalDemo />
-
-            {/* Link to full terminal */}
+            {/* Glow effect wrapper */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="relative"
+            >
+              {/* Animated glow */}
+              <motion.div
+                animate={{
+                  boxShadow: [
+                    '0 0 80px rgba(0, 255, 0, 0.1)',
+                    '0 0 120px rgba(0, 255, 255, 0.15)',
+                    '0 0 80px rgba(0, 255, 0, 0.1)',
+                  ]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute -inset-4 rounded-3xl blur-2xl opacity-50 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1))' }}
+              />
+              
+              {/* Kali Linux Terminal */}
+              <div className="relative z-10">
+                <KaliTerminalDemo />
+              </div>
+            </motion.div>
+
+            {/* Link to full terminal - Bounce in from bottom */}
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 0.6,
+                delay: 0.5,
+                ease: [0.34, 1.56, 0.64, 1] // Bounce ease
+              }}
               className="text-center mt-8"
             >
               <Link href="/terminal">
-                <Button size="lg" variant="neon" className="group">
-                  <TerminalIcon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
-                  Try Full Interactive Terminal
-                  <ArrowDown className="h-5 w-5 ml-2 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
+                <Button size="lg" variant="neon" className="group relative overflow-hidden">
+                  {/* Animated background shimmer */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-matrix-green/20 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <TerminalIcon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform relative z-10" />
+                  <span className="relative z-10">Try Full Interactive Terminal</span>
+                  <ArrowDown className="h-5 w-5 ml-2 rotate-[-90deg] group-hover:translate-x-1 transition-transform relative z-10" />
                 </Button>
               </Link>
             </motion.div>
+          </motion.div>
+
+          {/* Decorative floating elements */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="absolute top-20 left-10 text-6xl pointer-events-none"
+          >
+            <motion.span
+              animate={{ 
+                y: [0, -20, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="inline-block text-matrix-green"
+            >
+              💻
+            </motion.span>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 1 }}
+            className="absolute bottom-20 right-10 text-6xl pointer-events-none"
+          >
+            <motion.span
+              animate={{ 
+                y: [0, 20, 0],
+                rotate: [0, -5, 0]
+              }}
+              transition={{ 
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="inline-block text-cyber-cyan"
+            >
+              ⚡
+            </motion.span>
           </motion.div>
         </div>
       </section>
