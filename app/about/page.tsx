@@ -5,6 +5,7 @@ import { Section } from '@/components/ui/section'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Code, Palette, Rocket, Briefcase, GraduationCap, Zap, Heart } from 'lucide-react'
+import { Timeline, type TimelineItem } from '@/components/ui/timeline'
 import { useIntersectionObserver } from '@/lib/hooks/use-intersection-observer'
 import { Terminal, TypingAnimation, AnimatedSpan } from '@/components/ui/terminal'
 import HolographicCard from '@/components/ui/holographic-card'
@@ -29,38 +30,42 @@ const skills = [
 ]
 
 // Timeline data based on his profile
-const timeline = [
+const timeline: TimelineItem[] = [
   {
-    year: '2024',
+    id: '1',
     title: 'Full Stack Developer',
-    company: 'DigiBayt',
     description: 'Building cutting-edge web applications with modern tech stack. Creating magic with Next.js, React, and Django.',
-    icon: Rocket,
-    color: 'from-blue-500 to-cyan-500',
+    timestamp: new Date('2024-01-01'),
+    status: 'completed',
+    icon: <Rocket className="h-3 w-3" />,
+    content: <Badge className="bg-gradient-to-r from-blue-500 to-cyan-500">DigiBayt</Badge>,
   },
   {
-    year: '2023',
+    id: '2',
     title: 'Major Projects',
-    company: 'Open Source & Freelance',
     description: 'Developed FunoonFiesta (event management), IT Stock Management System, and various AI-powered applications.',
-    icon: Code,
-    color: 'from-purple-500 to-pink-500',
+    timestamp: new Date('2023-01-01'),
+    status: 'completed',
+    icon: <Code className="h-3 w-3" />,
+    content: <Badge variant="outline">Open Source & Freelance</Badge>,
   },
   {
-    year: '2022',
+    id: '3',
     title: 'Web Development Journey',
-    company: 'Self-Learning & Building',
     description: 'Mastered modern web development, from Django backends to React frontends. Built 39+ repositories and counting!',
-    icon: Zap,
-    color: 'from-green-500 to-emerald-500',
+    timestamp: new Date('2022-01-01'),
+    status: 'completed',
+    icon: <Zap className="h-3 w-3" />,
+    content: <Badge variant="outline">Self-Learning & Building</Badge>,
   },
   {
-    year: '2021',
+    id: '4',
     title: 'The Beginning',
-    company: 'Code Enthusiast',
     description: 'Started the journey into programming. Fell in love with creating things that live on the internet.',
-    icon: Heart,
-    color: 'from-orange-500 to-red-500',
+    timestamp: new Date('2021-01-01'),
+    status: 'completed',
+    icon: <Heart className="h-3 w-3" />,
+    content: <Badge className="bg-gradient-to-r from-orange-500 to-red-500">Code Enthusiast</Badge>,
   },
 ]
 
@@ -323,50 +328,18 @@ export default function AboutPage() {
           My <span className="gradient-text">Journey</span> 🗺️
         </h2>
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-purple-500 to-pink-500 rounded-full" />
-
-            {/* Timeline items */}
-            <div className="space-y-12">
-              {timeline.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative pl-20"
-                >
-                  {/* Icon */}
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className={`absolute left-0 top-0 h-16 w-16 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-lg`}
-                  >
-                    <item.icon className="h-8 w-8" />
-                  </motion.div>
-
-                  {/* Content */}
-                  <Card className="group hover:shadow-xl transition-all">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-2">
-                        <Badge className="bg-gradient-to-r from-primary to-purple-600">
-                          {item.year}
-                        </Badge>
-                      </div>
-                      <CardTitle className="group-hover:text-primary transition-colors">
-                        {item.title}
-                      </CardTitle>
-                      <p className="text-sm text-primary font-medium">{item.company}</p>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Timeline 
+              items={timeline} 
+              variant="spacious"
+              timestampPosition="top"
+            />
+          </motion.div>
         </div>
       </Section>
 

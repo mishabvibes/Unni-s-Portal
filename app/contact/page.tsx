@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Mail, MapPin, Github, Send, CheckCircle, Loader2, Instagram, Linkedin, Code2, Coffee, Zap, Target } from 'lucide-react'
+import { Component as MatrixCodeRain } from '@/components/ui/matrix-code-rain'
 
 // Lazy load the heavy DottedMap component for better performance
 const DottedMap = lazy(() => import('@/components/ui/dotted-map').then(module => ({ default: module.DottedMap })))
@@ -115,7 +116,13 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="relative">
+      {/* Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <MatrixCodeRain />
+      </div>
+
+      <div className="container mx-auto px-4 py-16 relative z-10">
       {/* Header */}
       <Section>
         <motion.div
@@ -602,6 +609,7 @@ export default function ContactPage() {
           </div>
         </div>
       </Section>
+      </div>
     </div>
   )
 }

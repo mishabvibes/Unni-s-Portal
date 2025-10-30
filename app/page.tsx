@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { 
@@ -19,6 +19,9 @@ import ElectricBorder from '@/components/ui/electric-border'
 import Lightning from '@/components/ui/lightning'
 import GlitchText from '@/components/ui/glitch-text'
 import ScrambledText from '@/components/ui/scrambled-text'
+import { DotPattern } from '@/components/ui/dot-pattern'
+import dynamic from 'next/dynamic'
+const RotatingEarth = dynamic(() => import('@/components/ui/wireframe-dotted-globe'), { ssr: false, loading: () => <div className="w-full h-[300px] sm:h-[380px] rounded-2xl border border-matrix-green/20 bg-black/40 flex items-center justify-center text-muted-foreground">Loading globe…</div> })
 
 /**
  * Home Page - Professional Portfolio Homepage
@@ -166,12 +169,15 @@ export default function HomePage() {
                   enableShadows={true}
                   enableOnHover={false}
                   className="text-5xl md:text-7xl lg:text-8xl"
+                  baseTextClass="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-400 to-red-600"
+                  afterShadowColor="#ff0033"
+                  beforeShadowColor="#ff4d4d"
                 >
                   MISHAB
                 </GlitchText>
               </div>
               <div className="text-2xl md:text-3xl lg:text-4xl font-semibold">
-                <span className="gradient-text">Full-Stack Developer</span>
+                <span className="text-red-500">Full-Stack Developer</span>
               </div>
             </motion.div>
 
@@ -326,7 +332,7 @@ export default function HomePage() {
               }}
               className="text-muted-foreground text-lg mb-4"
             >
-              Experience my portfolio through realistic terminal interfaces
+              Experience my portfolio through a realistic terminal and a live, rotating globe with a green glow
             </motion.p>
 
             {/* Badges - Staggered slide from left and right */}
@@ -343,6 +349,36 @@ export default function HomePage() {
               >
                 <Badge className="bg-matrix-green/10 border-matrix-green/30 text-matrix-green hover:scale-110 transition-transform cursor-default">
                   Kali Linux Style
+                </Badge>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.55,
+                  ease: "backOut"
+                }}
+              >
+                <Badge className="bg-matrix-green/10 border-matrix-green/30 text-matrix-green hover:scale-110 transition-transform cursor-default">
+                  Dotted Wireframe Globe
+                </Badge>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.65,
+                  ease: "backOut"
+                }}
+              >
+                <Badge className="bg-matrix-green/10 border-matrix-green/30 text-matrix-green hover:scale-110 transition-transform cursor-default">
+                  Green Glow Theme
                 </Badge>
               </motion.div>
               
@@ -378,7 +414,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Terminal - Slide from bottom with scale and glow effect */}
+          {/* Terminal + Globe - Slide from bottom with scale and glow effect */}
           <motion.div
             initial={{ opacity: 0, y: 80, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -388,39 +424,40 @@ export default function HomePage() {
               delay: 0.2,
               ease: [0.22, 1, 0.36, 1]
             }}
-            className="max-w-5xl mx-auto"
+            className="max-w-6xl mx-auto"
           >
-            {/* Glow effect wrapper */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="relative"
-            >
-              {/* Animated glow */}
-              <motion.div
-                animate={{
-                  boxShadow: [
-                    '0 0 80px rgba(0, 255, 0, 0.1)',
-                    '0 0 120px rgba(0, 255, 255, 0.15)',
-                    '0 0 80px rgba(0, 255, 0, 0.1)',
-                  ]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute -inset-4 rounded-3xl blur-2xl opacity-50 pointer-events-none"
-                style={{ background: 'linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1))' }}
-              />
-              
-              {/* Kali Linux Terminal */}
-              <div className="relative z-10">
-                <KaliTerminalDemo />
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Left: Terminal with glow */}
+              <div className="relative">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="relative"
+                >
+                  <motion.div
+                    animate={{
+                      boxShadow: [
+                        '0 0 80px rgba(0, 255, 0, 0.1)',
+                        '0 0 120px rgba(0, 255, 255, 0.15)',
+                        '0 0 80px rgba(0, 255, 0, 0.1)',
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute -inset-4 rounded-3xl blur-2xl opacity-50 pointer-events-none"
+                    style={{ background: 'linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1))' }}
+                  />
+                  <div className="relative z-10">
+                    <KaliTerminalDemo />
+                  </div>
+                </motion.div>
+              </div>
+              {/* Right: Dotted Globe */}
+              <div className="relative">
+                <RotatingEarth width={640} height={480} className="mx-auto" />
+              </div>
             </div>
-            </motion.div>
 
             {/* Link to full terminal - Bounce in from bottom */}
             <motion.div
@@ -546,6 +583,55 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Quote Section with Dot Pattern */}
+      <section className="py-20 relative">
+        <div className="mx-auto mb-10 max-w-7xl px-6 md:mb-20 xl:px-0">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative flex flex-col items-center border border-matrix-green rounded-2xl overflow-hidden"
+          >
+            <DotPattern 
+              width={5} 
+              height={5} 
+              className="opacity-60 fill-matrix-green/30"
+            />
+            
+            <div className="absolute -left-1.5 -top-1.5 h-3 w-3 bg-matrix-green text-white rounded-sm animate-pulse" />
+            <div className="absolute -bottom-1.5 -left-1.5 h-3 w-3 bg-matrix-green text-white rounded-sm animate-pulse" />
+            <div className="absolute -right-1.5 -top-1.5 h-3 w-3 bg-matrix-green text-white rounded-sm animate-pulse" />
+            <div className="absolute -bottom-1.5 -right-1.5 h-3 w-3 bg-matrix-green text-white rounded-sm animate-pulse" />
+            
+            <div className="relative z-20 mx-auto max-w-7xl rounded-[40px] py-6 md:p-10 xl:py-20">
+              <p className="md:text-md text-xs text-matrix-green lg:text-lg xl:text-2xl animate-pulse font-mono uppercase tracking-wider">
+                My Passion
+              </p>
+              <div className="text-2xl tracking-tighter md:text-5xl lg:text-7xl xl:text-8xl">
+                <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-wrap">
+                  <h1 className="font-semibold text-cyber-cyan">&quot;Code is not</h1>
+                  <p className="font-thin text-matrix-green/70">just</p>
+                </div>
+                <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-wrap">
+                  <p className="font-thin text-matrix-green/70">lines of</p>
+                  <h1 className="font-semibold text-cyber-cyan">text</h1>
+                  <p className="font-thin text-matrix-green/70">but</p>
+                </div>
+                <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-wrap">
+                  <h1 className="font-semibold text-cyber-cyan">crafted experiences</h1>
+                  <p className="font-thin text-matrix-green/70">that</p>
+                </div>
+                <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-wrap">
+                  <p className="font-thin text-matrix-green/70">users</p>
+                  <h1 className="font-semibold text-cyber-cyan">will love...&quot;</h1>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Tech Stack Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
@@ -633,9 +719,9 @@ export default function HomePage() {
                       <motion.div
                         animate={{
                           boxShadow: [
-                            '0 0 40px rgba(0, 255, 0, 0.3)',
-                            '0 0 60px rgba(0, 255, 255, 0.4)',
-                            '0 0 40px rgba(0, 255, 0, 0.3)',
+                            '0 0 40px rgba(255, 0, 51, 0.35)',
+                            '0 0 60px rgba(0, 153, 255, 0.45)',
+                            '0 0 40px rgba(255, 0, 51, 0.35)',
                           ]
                         }}
                         transition={{
@@ -644,11 +730,11 @@ export default function HomePage() {
                           ease: "easeInOut"
                         }}
                         className="absolute -inset-2 rounded-xl blur-xl opacity-60 pointer-events-none"
-                        style={{ background: 'linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2))' }}
+                        style={{ background: 'linear-gradient(135deg, rgba(255, 0, 51, 0.25), rgba(0, 153, 255, 0.25))' }}
                       />
                       
                       <ElectricBorder
-                        color="#00ff00"
+                        color="#ff0033"
                         speed={1.5}
                         chaos={0.5}
                         thickness={2}
@@ -698,7 +784,7 @@ export default function HomePage() {
                   ) : (
                     // Other cards - Hover-activated electrical border
                     <ElectricBorder
-                      color="#00ff00"
+                      color="#009dff"
                       speed={1.5}
                       chaos={0.5}
                       thickness={2}

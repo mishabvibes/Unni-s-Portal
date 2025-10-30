@@ -16,6 +16,7 @@ interface EnhancedTerminalProps {
   hostname?: string
   theme?: 'kali' | 'macos' | 'matrix'
   autoPlay?: boolean
+  loop?: boolean
   className?: string
 }
 
@@ -29,6 +30,7 @@ export function EnhancedTerminal({
   hostname = "portfolio",
   theme = "kali",
   autoPlay = true,
+  loop = true,
   className = "",
 }: EnhancedTerminalProps) {
   const [visibleLines, setVisibleLines] = useState<number>(0)
@@ -90,7 +92,18 @@ export function EnhancedTerminal({
     let timeoutId: NodeJS.Timeout
 
     const typeNextChar = () => {
-      if (currentLine >= lines.length) return
+      if (currentLine >= lines.length) {
+        if (loop) {
+          // restart after a short pause
+          setIsTyping(false)
+          setCurrentTyping("")
+          setVisibleLines(0)
+          currentLine = 0
+          charIndex = 0
+          timeoutId = setTimeout(typeNextChar, 1500)
+        }
+        return
+      }
 
       const line = lines[currentLine]
       
@@ -118,7 +131,7 @@ export function EnhancedTerminal({
     timeoutId = setTimeout(typeNextChar, 1000)
 
     return () => clearTimeout(timeoutId)
-  }, [lines, autoPlay])
+  }, [lines, autoPlay, loop])
 
   const getLineColor = (type: TerminalLine['type']) => {
     switch (type) {

@@ -5,6 +5,7 @@ import PortfolioTerminal from '@/components/ui/interactive-portfolio-terminal'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { motion } from 'framer-motion'
 import { Zap, Database, Cpu, Network } from 'lucide-react'
+ 
 
 /**
  * Interactive Terminal Page
@@ -26,6 +27,7 @@ export default function TerminalPage() {
       <div className="cyber-grid absolute inset-0 opacity-10" />
       
       <div className="container mx-auto max-w-7xl">
+        {/* (removed) Futuristic hero section */}
         <div ref={containerRef} className="relative flex flex-col items-center gap-16">
           
           {/* Power Sources Grid */}
