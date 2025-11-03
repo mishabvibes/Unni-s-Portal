@@ -145,16 +145,16 @@ export default function HomePage() {
       {/* Hero content */}
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Status Badge */}
+            {/* Status Badge - Mobile responsive */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-              className="mb-6 flex justify-center"
+              className="mb-4 sm:mb-6 flex justify-center px-4"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass neon-border">
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full glass neon-border">
                 <StatusBadge status="online" showText={false} />
-                <span className="text-sm font-mono text-terminal-green">AVAILABLE FOR PROJECTS</span>
+                <span className="text-xs sm:text-sm font-mono text-terminal-green whitespace-nowrap">AVAILABLE FOR PROJECTS</span>
               </div>
           </motion.div>
 
@@ -201,46 +201,46 @@ export default function HomePage() {
               </ScrambledText>
             </motion.div>
 
-            {/* Location & Company */}
+            {/* Location & Company - Mobile responsive */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-              className="mb-10 flex flex-wrap items-center justify-center gap-3"
+              className="mb-8 sm:mb-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-4"
             >
-              <Badge className="px-4 py-2 text-sm bg-matrix-green/10 border-matrix-green/30 text-matrix-green">
-                <span className="mr-2">📍</span> Palakkad, Kerala, India
+              <Badge className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-matrix-green/10 border-matrix-green/30 text-matrix-green">
+                <span className="mr-1 sm:mr-2">📍</span> Palakkad, Kerala, India
               </Badge>
-              <Badge className="px-4 py-2 text-sm bg-cyber-cyan/10 border-cyber-cyan/30 text-cyber-cyan">
-                <span className="mr-2">💼</span> DigiBayt
+              <Badge className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyber-cyan/10 border-cyber-cyan/30 text-cyber-cyan">
+                <span className="mr-1 sm:mr-2">💼</span> DigiBayt
               </Badge>
-              <Badge className="px-4 py-2 text-sm bg-neon-pink/10 border-neon-pink/30 text-neon-pink">
-                <span className="mr-2">⚡</span> 3+ Years Experience
+              <Badge className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-neon-pink/10 border-neon-pink/30 text-neon-pink">
+                <span className="mr-1 sm:mr-2">⚡</span> 3+ Years Experience
               </Badge>
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Mobile responsive */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-            className="hidden md:flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-4"
           >
-            <Link href="/projects">
-                <Button size="lg" variant="default" className="group min-w-[200px]">
-                  <Rocket className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
+            <Link href="/projects" className="w-full sm:w-auto">
+                <Button size="lg" variant="default" className="group w-full sm:min-w-[200px]">
+                  <Rocket className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:rotate-12 transition-transform" />
                   View Projects
                 </Button>
               </Link>
-              <Link href="/terminal">
-                <Button size="lg" variant="neon" className="group min-w-[200px]">
-                  <TerminalIcon className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
+              <Link href="/terminal" className="w-full sm:w-auto">
+                <Button size="lg" variant="neon" className="group w-full sm:min-w-[200px]">
+                  <TerminalIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Launch Terminal
               </Button>
             </Link>
-            <Link href="/contact">
-                <Button size="lg" variant="outline" className="group min-w-[200px]">
-                <Mail className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
+            <Link href="/contact" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="group w-full sm:min-w-[200px]">
+                <Mail className="h-4 w-4 sm:h-5 sm:w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Get in Touch
               </Button>
             </Link>

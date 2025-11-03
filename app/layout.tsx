@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Footer } from '@/components/footer'
+import { ConditionalFooter } from '@/components/conditional-footer'
 import { LayoutClient, LayoutFooter } from '@/components/layout-client'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -268,7 +268,7 @@ export default function RootLayout({
           <LayoutClient />
           <div className="flex flex-col min-h-screen scanlines relative z-10">
             <main className="flex-1">{children}</main>
-            <Footer />
+            <ConditionalFooter />
             <LayoutFooter />
           </div>
         </ThemeProvider>

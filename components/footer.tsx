@@ -15,7 +15,7 @@ const socialLinks = [
 
 const stats = [
   { icon: Code2, label: 'LINES OF CODE', value: '10K+' },
-  { icon: Terminal, label: 'PROJECTS', value: '39+' },
+  // { icon: Terminal, label: 'PROJECTS', value: '39+' },
   { icon: Cpu, label: 'COMMITS', value: '500+' },
   { icon: Zap, label: 'UPTIME', value: '99.9%' },
 ]
@@ -159,28 +159,6 @@ export function Footer() {
               </div>
             </div>
           </div>
-
-          {/* System Status */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="mt-4 text-center"
-          >
-            <div className="inline-block bg-black/60 border border-matrix-green/20 rounded px-4 py-2 font-mono text-xs text-muted-foreground">
-              <span className="text-matrix-green">[</span>
-              <span className="text-cyber-cyan"> SYSTEM STATUS </span>
-              <span className="text-matrix-green">]</span>
-              <span className="mx-2 text-matrix-green/50">:</span>
-              <span className="text-terminal-green">ALL SYSTEMS OPERATIONAL</span>
-              <span className="mx-2 text-matrix-green/50">|</span>
-              <span className="text-muted-foreground">Built with</span>
-              <span className="text-matrix-green mx-1">Next.js</span>
-              <span className="text-muted-foreground">&</span>
-              <span className="text-cyber-cyan mx-1">TypeScript</span>
-            </div>
-          </motion.div> */}
         </motion.div>
       </div>
     </footer>

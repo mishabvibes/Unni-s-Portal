@@ -328,67 +328,74 @@ Type 'help' to see available commands.`
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-transparent text-matrix-green p-4 font-mono">
-      <div className="w-full max-w-5xl bg-black rounded-lg overflow-hidden shadow-2xl border-2 border-matrix-green/30 shadow-matrix-green/20">
-        {/* Terminal Header */}
-        <div className="flex items-center gap-2 p-3 bg-muted/10 text-xs text-muted-foreground border-b border-matrix-green/20">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-hacker-red hover:bg-hacker-red/80 transition-colors cursor-pointer shadow-sm shadow-hacker-red/50" />
-            <div className="w-3 h-3 rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 transition-colors cursor-pointer shadow-sm shadow-cyber-cyan/50" />
-            <div className="w-3 h-3 rounded-full bg-matrix-green hover:bg-matrix-green/80 transition-colors cursor-pointer shadow-sm shadow-matrix-green/50" />
+    <div className="flex items-center justify-center w-full h-full bg-transparent text-matrix-green font-mono">
+      <div className="w-full h-full flex flex-col bg-black overflow-hidden">
+        {/* Terminal Header - Compact & Professional */}
+        <div className="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 md:p-3 bg-muted/10 text-[10px] sm:text-xs text-muted-foreground border-b border-matrix-green/20 flex-shrink-0">
+          <div className="flex gap-1 sm:gap-1.5">
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full bg-hacker-red hover:bg-hacker-red/80 transition-colors cursor-pointer shadow-sm shadow-hacker-red/50" />
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 transition-colors cursor-pointer shadow-sm shadow-cyber-cyan/50" />
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full bg-matrix-green hover:bg-matrix-green/80 transition-colors cursor-pointer shadow-sm shadow-matrix-green/50" />
           </div>
-          <div className="flex-1 text-center font-semibold text-matrix-green">mishab@portfolio-terminal:~$ | Interactive Portfolio v1.0</div>
-          <div className="text-xs">
-            <span className="text-matrix-green animate-pulse">●</span> ONLINE
+          <div className="flex-1 text-center font-semibold text-matrix-green text-[9px] sm:text-[10px] md:text-xs lg:text-sm truncate px-1">
+            <span className="hidden sm:inline">mishab@portfolio-terminal:~$</span>
+            <span className="hidden md:inline"> | </span>
+            <span className="sm:hidden">Terminal</span>
+            <span className="hidden sm:inline">Interactive Portfolio v1.0</span>
+          </div>
+          <div className="text-[10px] sm:text-xs flex items-center gap-1">
+            <span className="text-matrix-green animate-pulse">●</span>
+            <span className="hidden sm:inline">ONLINE</span>
           </div>
         </div>
 
-        {/* Terminal Output */}
+        {/* Terminal Output - Full height responsive */}
         <div 
           ref={terminalRef} 
-          className="h-[75vh] overflow-y-auto p-4 space-y-3 bg-black cursor-text scrollbar-thin"
+          className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-4 space-y-2 sm:space-y-3 bg-black cursor-text scrollbar-thin"
           style={{
             scrollbarWidth: 'thin',
             scrollbarColor: '#00ff00 #1f2937'
           }}
         >
           {history.map((entry, i) => (
-            <div key={i} className="space-y-2">
-              <div className="flex gap-2">
-                <span className="text-cyber-cyan font-semibold">mishab@portfolio:~$</span>
-                <span className="text-white">{entry.command}</span>
+            <div key={i} className="space-y-1 sm:space-y-2">
+              <div className="flex gap-1 sm:gap-2 flex-wrap items-start">
+                <span className="text-cyber-cyan font-semibold text-xs sm:text-sm whitespace-nowrap flex-shrink-0">mishab@portfolio:~$</span>
+                <span className="text-white text-xs sm:text-sm break-words break-all">{entry.command}</span>
               </div>
-              <div className="whitespace-pre-wrap text-terminal-green pl-6 leading-relaxed">
+              <div className="whitespace-pre-wrap text-terminal-green pl-2 sm:pl-3 md:pl-4 lg:pl-6 leading-relaxed text-xs sm:text-sm break-words break-all overflow-wrap-anywhere font-mono">
                 {renderOutput(entry.output)}
               </div>
             </div>
           ))}
 
-          {/* Current Command Input */}
-          <div className="flex gap-2 items-center">
-            <span className="text-cyber-cyan font-semibold">mishab@portfolio:~$</span>
+          {/* Current Command Input - Professional responsive */}
+          <div className="flex gap-1 sm:gap-2 items-center flex-wrap bg-black/50 backdrop-blur-sm p-1.5 sm:p-2 rounded border border-matrix-green/10 sticky bottom-0 z-10">
+            <span className="text-cyber-cyan font-semibold text-xs sm:text-sm whitespace-nowrap flex-shrink-0">mishab@portfolio:~$</span>
             <input
               ref={inputRef}
               type="text"
               value={currentCommand}
               onChange={e => setCurrentCommand(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent outline-none text-white caret-matrix-green"
+              className="flex-1 min-w-[80px] sm:min-w-[120px] bg-transparent outline-none text-white caret-matrix-green text-xs sm:text-sm placeholder:text-muted-foreground/50"
+              placeholder="Type command..."
               autoFocus
               spellCheck="false"
             />
-            <span className="text-matrix-green animate-pulse">█</span>
+            <span className="text-matrix-green animate-pulse text-xs sm:text-sm flex-shrink-0">█</span>
           </div>
 
           {/* Auto-scroll anchor */}
           <div ref={bottomRef} />
         </div>
         
-        {/* Terminal Footer */}
-        <div className="bg-muted/10 px-4 py-2 text-xs text-muted-foreground border-t border-matrix-green/20">
-          <div className="flex justify-between items-center">
-            <span className="text-terminal-green">Type 'help' for available commands • Use ↑/↓ arrows for command history</span>
-            <span className="text-cyber-cyan">Press Enter to execute • 'clear' to reset terminal</span>
+        {/* Terminal Footer - Compact & Hidden on mobile */}
+        <div className="hidden sm:flex bg-muted/10 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 text-[9px] sm:text-[10px] md:text-xs text-muted-foreground border-t border-matrix-green/20 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-2 w-full">
+            <span className="text-terminal-green text-[9px] sm:text-[10px]">Type 'help' for commands • Use ↑/↓ for history</span>
+            <span className="text-cyber-cyan text-[9px] sm:text-[10px]">Press Enter • 'clear' to reset</span>
           </div>
         </div>
       </div>

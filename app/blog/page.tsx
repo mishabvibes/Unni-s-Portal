@@ -100,10 +100,10 @@ export default function BlogPage() {
   // Loading skeleton
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
           {/* Header skeleton */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <div className="h-16 bg-muted rounded-lg w-96 mx-auto mb-4 animate-pulse" />
             <div className="h-6 bg-muted rounded-lg w-64 mx-auto animate-pulse" />
           </div>
@@ -127,7 +127,7 @@ export default function BlogPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 max-w-4xl mx-auto"
+          className="text-center mb-8 sm:mb-12 md:mb-16 max-w-4xl mx-auto px-4"
         >
           {/* Badge */}
           <motion.div
@@ -147,7 +147,7 @@ export default function BlogPage() {
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={prefersReducedMotion ? {} : { delay: 0.2, duration: 0.4 }}
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4"
           >
             <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
               Blog
@@ -159,7 +159,7 @@ export default function BlogPage() {
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={prefersReducedMotion ? {} : { delay: 0.3, duration: 0.4 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-8"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 px-4"
           >
             Discover insights on web development, cybersecurity, and cutting-edge technology
           </motion.p>
@@ -177,7 +177,7 @@ export default function BlogPage() {
               placeholder="Search articles, topics, tags..."
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="pl-14 pr-14 h-14 text-lg bg-card/50 border-2 border-border hover:border-primary/50 focus:border-primary transition-colors"
+              className="pl-12 sm:pl-14 pr-4 sm:pr-14 h-12 sm:h-14 text-base sm:text-lg bg-card/50 border-2 border-border hover:border-primary/50 focus:border-primary transition-colors w-full sm:w-auto"
             />
             {searchInput && (
               <Button

@@ -106,19 +106,19 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         {/* Header */}
         <Section>
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={prefersReducedMotion ? {} : { duration: 0.3 }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 md:mb-16 px-4"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
               My <span className="gradient-text">Projects</span> 🚀
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               From ideas to reality - here's what I've been building
             </p>
             <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">

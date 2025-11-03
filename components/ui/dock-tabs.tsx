@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { Home, User, Briefcase, FileText, Terminal, Mail } from 'lucide-react'
+import { Home, User, Briefcase, FileText, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -19,7 +19,6 @@ const dockItems: DockItem[] = [
   { id: "about", name: "About", icon: <User />, color: "from-cyber-cyan to-blue-500", href: "/about" },
   { id: "projects", name: "Projects", icon: <Briefcase />, color: "from-neon-purple to-purple-600", href: "/projects" },
   { id: "blog", name: "Blog", icon: <FileText />, color: "from-neon-pink to-pink-600", href: "/blog" },
-  { id: "terminal", name: "Terminal", icon: <Terminal />, color: "from-terminal-green to-matrix-green", href: "/terminal" },
   { id: "contact", name: "Contact", icon: <Mail />, color: "from-hacker-red to-red-600", href: "/contact" },
 ]
 

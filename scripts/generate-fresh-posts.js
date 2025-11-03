@@ -4,7 +4,7 @@
 
 require('dotenv').config({ path: '.env.local' })
 
-const baseUrl = process.argv[2] || 'http://localhost:3000'
+const baseUrl = process.argv[2] || 'https://heymishab.vercel.app'
 
 const topics = [
   { topic: 'Modern Web Development Best Practices', category: 'programming' },

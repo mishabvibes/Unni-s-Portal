@@ -122,7 +122,7 @@ export function MusicToggle({
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5 }}
-        className="fixed left-4 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2"
+        className="fixed left-2 md:left-4 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-1.5 md:gap-2"
       >
         {/* Main Toggle Button */}
         <motion.button
@@ -134,7 +134,7 @@ export function MusicToggle({
           {/* Glow effect when playing */}
           {isPlaying && (
             <motion.div
-              className="absolute inset-0 rounded-2xl bg-matrix-green/30 blur-xl"
+              className="absolute inset-0 rounded-xl md:rounded-2xl bg-matrix-green/30 blur-xl"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.6, 0.3],
@@ -147,13 +147,13 @@ export function MusicToggle({
             />
           )}
           
-          {/* Button Container */}
-          <div className={`relative flex flex-col items-center gap-3 px-3 py-6 rounded-2xl border-2 transition-all duration-300 ${
+          {/* Button Container - Smaller on mobile */}
+          <div className={`relative flex flex-col items-center gap-1.5 md:gap-3 px-2 md:px-3 py-3 md:py-6 rounded-xl md:rounded-2xl border-2 transition-all duration-300 ${
             isPlaying 
               ? 'bg-black/90 border-matrix-green shadow-[0_0_20px_rgba(0,255,0,0.4)]' 
               : 'bg-black/70 border-matrix-green/30 shadow-lg'
           }`}>
-            {/* Music Icon */}
+            {/* Music Icon - Smaller on mobile */}
             <motion.div
               animate={isPlaying ? {
                 y: [0, -4, 0],
@@ -165,23 +165,23 @@ export function MusicToggle({
                 ease: "easeInOut"
               }}
             >
-              <Music className={`h-6 w-6 ${
+              <Music className={`h-4 w-4 md:h-6 md:w-6 ${
                 isPlaying ? 'text-matrix-green' : 'text-muted-foreground'
               }`} />
             </motion.div>
 
-            {/* Status Bars */}
-            <div className="flex gap-1">
+            {/* Status Bars - Smaller on mobile */}
+            <div className="flex gap-0.5 md:gap-1">
               {[1, 2, 3].map((i) => (
                 <motion.div
                   key={i}
-                  className={`w-1 rounded-full ${
+                  className={`w-0.5 md:w-1 rounded-full ${
                     isPlaying ? 'bg-matrix-green' : 'bg-muted-foreground/30'
                   }`}
                   animate={isPlaying ? {
-                    height: ['8px', '20px', '8px'],
+                    height: ['6px', '14px', '6px'],
                   } : {
-                    height: '8px'
+                    height: '6px'
                   }}
                   transition={{
                     duration: 0.8,
@@ -193,8 +193,8 @@ export function MusicToggle({
               ))}
             </div>
 
-            {/* Status Text */}
-            <div className="text-[8px] font-mono tracking-wider">
+            {/* Status Text - Smaller on mobile */}
+            <div className="text-[6px] md:text-[8px] font-mono tracking-wider">
               {isPlaying ? (
                 <span className="text-matrix-green">ON</span>
               ) : (
@@ -216,7 +216,7 @@ export function MusicToggle({
           </div>
         </motion.button>
 
-        {/* Volume Toggle (when playing) */}
+        {/* Volume Toggle (when playing) - Smaller on mobile */}
         {isPlaying && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
@@ -227,11 +227,11 @@ export function MusicToggle({
             onClick={toggleMute}
             className="relative group"
           >
-            <div className="relative flex items-center justify-center px-2 py-2 rounded-xl bg-black/80 border border-matrix-green/30 hover:border-matrix-green/60 transition-colors">
+            <div className="relative flex items-center justify-center px-1.5 md:px-2 py-1.5 md:py-2 rounded-lg md:rounded-xl bg-black/80 border border-matrix-green/30 hover:border-matrix-green/60 transition-colors">
               {isMuted ? (
-                <VolumeX className="h-4 w-4 text-hacker-red" />
+                <VolumeX className="h-3 w-3 md:h-4 md:w-4 text-hacker-red" />
               ) : (
-                <Volume2 className="h-4 w-4 text-cyber-cyan" />
+                <Volume2 className="h-3 w-3 md:h-4 md:w-4 text-cyber-cyan" />
               )}
             </div>
 
