@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, lazy, Suspense } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -49,8 +49,8 @@ const contactInfo = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'muhammed-mishab',
-    href: 'https://linkedin.com/in/muhammed-mishab-71311034a',
+    value: 'muhammed-mishab-nk',
+    href: 'https://www.linkedin.com/in/muhammed-mishab-nk/',
     color: 'from-blue-600 to-blue-800',
   },
   {
@@ -77,6 +77,7 @@ const quickActions = [
 ]
 
 export default function ContactPage() {
+  const prefersReducedMotion = useReducedMotion()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -126,15 +127,15 @@ export default function ContactPage() {
       {/* Header */}
       <Section>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={prefersReducedMotion ? {} : { duration: 0.3 }}
           className="text-center mb-16"
         >
           <div className="text-6xl mb-6">
             <motion.span
-              animate={{ rotate: [0, 14, -8, 14, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+              animate={prefersReducedMotion ? {} : { rotate: [0, 14, -8, 14, 0] }}
+              transition={prefersReducedMotion ? {} : { duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
               className="inline-block"
             >
               👋
@@ -151,15 +152,15 @@ export default function ContactPage() {
 
         {/* Quick Actions */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={prefersReducedMotion ? {} : { duration: 0.3, delay: 0.1 }}
           className="grid md:grid-cols-3 gap-4 mb-12 max-w-4xl mx-auto"
         >
           {quickActions.map((action, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ scale: 1.05, y: -5 }}
+              whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -5 }}
               className="glass rounded-xl p-6 text-center border border-primary/20"
             >
               <div className="text-4xl mb-3">{action.emoji}</div>

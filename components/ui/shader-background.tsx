@@ -191,8 +191,38 @@ const ShaderBackground = () => {
 
     const startTime = Date.now();
     let animationFrameId: number;
+    let frameSkip = false
+    let isVisible = true
+    let isInView = true
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // Intersection Observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isInView = entries[0].isIntersecting
+      },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
     
     const render = () => {
+      // Skip if tab is hidden or off-screen
+      if (!isVisible || !isInView) {
+        animationFrameId = requestAnimationFrame(render)
+        return
+      }
+
+      // Throttle to 30fps
+      frameSkip = !frameSkip
+      if (frameSkip) {
+        animationFrameId = requestAnimationFrame(render)
+        return
+      }
+
       const currentTime = (Date.now() - startTime) / 1000;
 
       gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -222,7 +252,9 @@ const ShaderBackground = () => {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      observer.disconnect();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 

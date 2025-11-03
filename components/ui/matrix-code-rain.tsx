@@ -136,9 +136,25 @@ export const Component = () => {
     canvas.height = container.clientHeight;
   }, []);
 
+  const isVisibleRef = useRef(true);
+  const frameSkipRef = useRef(false);
+
   const animate = useCallback((time: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Skip if tab is hidden
+    if (!isVisibleRef.current) {
+      animationFrameId.current = requestAnimationFrame(animate);
+      return;
+    }
+
+    // Throttle to 30fps
+    frameSkipRef.current = !frameSkipRef.current;
+    if (frameSkipRef.current) {
+      animationFrameId.current = requestAnimationFrame(animate);
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -160,6 +176,12 @@ export const Component = () => {
     resizeCanvas();
     lastTime.current = performance.now();
     cursorBlinkTime.current = 0;
+
+    const handleVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     animationFrameId.current = requestAnimationFrame(animate);
 
     window.addEventListener('resize', resizeCanvas);
@@ -170,6 +192,7 @@ export const Component = () => {
         animationFrameId.current = null;
       }
       window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [animate, resizeCanvas]);
 

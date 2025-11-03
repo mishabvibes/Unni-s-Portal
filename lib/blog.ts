@@ -1,6 +1,6 @@
 /**
  * Blog data and utilities - Mishab's Tech Blog
- * In production, integrate with a CMS or use MDX files
+ * Supports both static posts and dynamic AI-generated posts
  */
 
 export interface BlogPost {
@@ -15,9 +15,10 @@ export interface BlogPost {
     name: string
     avatar: string
   }
+  imageUrl?: string // Optional image URL for AI-generated posts
 }
 
-// Sample blog posts - Replace with your actual content
+// Static blog posts
 export const blogPosts: BlogPost[] = [
   {
     slug: 'building-funoonfiesta',
@@ -136,7 +137,8 @@ export function getAllPosts(): BlogPost[] {
  * Get a single post by slug
  */
 export function getPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug)
+  const allPosts = getAllPosts()
+  return allPosts.find((post) => post.slug === slug)
 }
 
 /**

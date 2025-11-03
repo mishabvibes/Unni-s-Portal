@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef } from "react"
 import { motion, useSpring } from "framer-motion"
 
 interface Position {
@@ -89,10 +89,9 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
-  const [isMoving, setIsMoving] = useState(false)
   const lastMousePos = useRef<Position>({ x: 0, y: 0 })
   const velocity = useRef<Position>({ x: 0, y: 0 })
-  const lastUpdateTime = useRef(Date.now())
+  const lastUpdateTime = useRef<number>(Date.now())
   const previousAngle = useRef(0)
   const accumulatedRotation = useRef(0)
 
@@ -149,21 +148,22 @@ export function SmoothCursor({
         previousAngle.current = currentAngle
 
         scale.set(0.95)
-        setIsMoving(true)
-
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
           scale.set(1)
-          setIsMoving(false)
         }, 150)
-
-        return () => clearTimeout(timeout)
       }
     }
 
     let rafId: number
+    let throttleLastTime = 0
     const throttledMouseMove = (e: MouseEvent) => {
       if (rafId) return
 
+      const now = performance.now()
+      // Throttle to 30fps (~33ms)
+      if (now - throttleLastTime < 33) return
+
+      throttleLastTime = now
       rafId = requestAnimationFrame(() => {
         smoothMouseMove(e)
         rafId = 0

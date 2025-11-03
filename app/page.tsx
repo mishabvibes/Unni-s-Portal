@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { 
   ArrowDown, Github, Linkedin, Mail, Instagram, Code2, Coffee, 
   Sparkles as SparklesIcon, Terminal as TerminalIcon, Rocket, 
@@ -20,6 +20,7 @@ import Lightning from '@/components/ui/lightning'
 import GlitchText from '@/components/ui/glitch-text'
 import ScrambledText from '@/components/ui/scrambled-text'
 import { DotPattern } from '@/components/ui/dot-pattern'
+import ScrollVelocity from '@/components/ui/scroll-velocity'
 import dynamic from 'next/dynamic'
 const RotatingEarth = dynamic(() => import('@/components/ui/wireframe-dotted-globe'), { ssr: false, loading: () => <div className="w-full h-[300px] sm:h-[380px] rounded-2xl border border-matrix-green/20 bg-black/40 flex items-center justify-center text-muted-foreground">Loading globe…</div> })
 
@@ -111,12 +112,13 @@ function AnimatedCounter({ value, label, delay = 0 }: { value: string; label: st
 }
 
 export default function HomePage() {
+  const prefersReducedMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/mishabvibes', label: 'GitHub', color: 'hover:text-matrix-green' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/muhammed-mishab-71311034a', label: 'LinkedIn', color: 'hover:text-cyber-cyan' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammed-mishab-nk/', label: 'LinkedIn', color: 'hover:text-cyber-cyan' },
     { icon: Instagram, href: 'https://instagram.com/heymishab', label: 'Instagram', color: 'hover:text-neon-pink' },
     { icon: Mail, href: 'mailto:mishabvibes@gmail.com', label: 'Email', color: 'hover:text-terminal-green' },
   ]
@@ -301,6 +303,44 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Scroll Velocity Section - Tech Stack Showcase */}
+      <section className="py-8 sm:py-12 relative overflow-hidden bg-gradient-to-b from-background via-card/30 to-background">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">
+              Technologies & Skills
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base">
+              Scroll to see the technologies I work with
+            </p>
+          </motion.div>
+        </div>
+        
+        {/* Full width scrolling section - no container constraints */}
+        <div className="w-screen relative -ml-[50vw] left-1/2">
+          <ScrollVelocity
+            texts={[
+              'React • Next.js • TypeScript • Django • Python • Node.js • MongoDB • PostgreSQL • Tailwind CSS • Framer Motion • Three.js • Web Development • Full-Stack Development',
+              'UI/UX Design • API Development • Frontend Development • Backend Development • Database Design • RESTful APIs • GraphQL • Docker • Git • AWS • Deployment • CI/CD • Performance Optimization',
+            ]}
+            velocity={50}
+            className="text-matrix-green font-bold"
+            damping={50}
+            stiffness={400}
+            numCopies={8}
+            velocityMapping={{ input: [0, 1000], output: [0, 5] }}
+            parallaxClassName="py-4 w-full bg-card/20 backdrop-blur-sm border-y border-matrix-green/20 shadow-lg shadow-matrix-green/10"
+            scrollerClassName="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-matrix-green via-cyber-cyan to-matrix-green font-bold"
+          />
+        </div>
+      </section>
+
       {/* Terminal Demo Section - Enhanced Scroll Reveal */}
       <section className="py-16 sm:py-20 relative overflow-hidden">
         <div className="container mx-auto px-4">
@@ -426,7 +466,7 @@ export default function HomePage() {
             }}
             className="max-w-6xl mx-auto"
           >
-            <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div className="grid lg:grid-cols-2 gap-4 items-center">
               {/* Left: Terminal with glow */}
               <div className="relative">
                 <motion.div
@@ -455,7 +495,7 @@ export default function HomePage() {
               </div>
               {/* Right: Dotted Globe */}
               <div className="relative">
-                <RotatingEarth width={640} height={480} className="mx-auto" />
+                <RotatingEarth width={640} height={640} className="mx-auto" />
               </div>
             </div>
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useMemo } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Section } from '@/components/ui/section'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -89,14 +89,20 @@ const projects = [
 const categories = ['All', 'Web App', 'AI/ML', 'Website']
 
 export default function ProjectsPage() {
+  const prefersReducedMotion = useReducedMotion()
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
 
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : projects.filter(p => p.category === selectedCategory)
+  // Memoize filtered projects for performance
+  const filteredProjects = useMemo(() => {
+    return selectedCategory === 'All' 
+      ? projects 
+      : projects.filter(p => p.category === selectedCategory)
+  }, [selectedCategory])
 
-  const featuredProjects = projects.filter(p => p.featured)
+  const featuredProjects = useMemo(() => 
+    projects.filter(p => p.featured), []
+  )
 
   return (
     <>
@@ -104,9 +110,9 @@ export default function ProjectsPage() {
         {/* Header */}
         <Section>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={prefersReducedMotion ? {} : { duration: 0.3 }}
             className="text-center mb-16"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -133,9 +139,9 @@ export default function ProjectsPage() {
           {/* Featured Projects Banner */}
           {featuredProjects.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={prefersReducedMotion ? {} : { duration: 0.3, delay: 0.1 }}
               className="mb-12"
             >
               <div className="flex items-center gap-2 mb-6">
@@ -146,9 +152,9 @@ export default function ProjectsPage() {
                 {featuredProjects.map((project, idx) => (
                   <motion.div
                     key={project.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.3 + idx * 0.1 }}
+                    transition={prefersReducedMotion ? {} : { duration: 0.2, delay: Math.min(0.2 + idx * 0.05, 0.3) }}
                   >
                     <Card 
                       className="h-full cursor-pointer group border-2 border-primary/20 hover:border-primary/50 transition-all"
@@ -186,9 +192,9 @@ export default function ProjectsPage() {
 
           {/* Category filter */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={prefersReducedMotion ? {} : { duration: 0.3, delay: 0.2 }}
             className="flex flex-wrap justify-center gap-2 mb-12"
           >
             <Filter className="h-5 w-5 text-muted-foreground mr-2 mt-2" />
@@ -218,26 +224,26 @@ export default function ProjectsPage() {
             <h2 className="text-2xl font-bold mb-6">All Projects</h2>
           </div>
           <motion.div 
-            layout
+            layout={!prefersReducedMotion}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
+                layout={!prefersReducedMotion}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={prefersReducedMotion ? {} : { duration: 0.2, delay: Math.min(index * 0.02, 0.1) }}
               >
-                <Card 
-                  className="h-full cursor-pointer group hover:shadow-2xl transition-all"
-                  onClick={() => setSelectedProject(project)}
-                >
-                  {/* Project image placeholder */}
-                  <div className="relative h-48 bg-secondary rounded-t-xl overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 group-hover:from-primary/30 group-hover:to-purple-600/30 transition-all" />
-                    <div className="absolute inset-0 flex items-center justify-center text-6xl group-hover:scale-110 transition-transform">
+                    <Card 
+                      className="h-full cursor-pointer group hover:shadow-xl transition-shadow duration-200"
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      {/* Project image placeholder */}
+                      <div className="relative h-48 bg-secondary rounded-t-xl overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 group-hover:from-primary/30 group-hover:to-purple-600/30 transition-colors duration-200" />
+                        <div className="absolute inset-0 flex items-center justify-center text-6xl group-hover:scale-105 transition-transform duration-200">
                       {project.category === 'AI/ML' ? '🤖' : 
                        project.category === 'Website' ? '🌐' : '🚀'}
                     </div>
@@ -314,8 +320,8 @@ export default function ProjectsPage() {
                   href="https://github.com/mishabvibes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   className="inline-flex items-center justify-center h-11 px-8 rounded-lg bg-gradient-to-r from-primary via-purple-500 to-pink-500 text-white font-medium"
                 >
                   Visit My GitHub ⭐

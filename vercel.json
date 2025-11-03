@@ -8,7 +8,13 @@
     "deploymentEnabled": {
       "main": true
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/generate-weekly-blogs",
+      "schedule": "0 9 * * 1"
+    }
+  ]
 }
 
 

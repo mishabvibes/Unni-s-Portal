@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
  */
 const socialLinks = [
   { icon: Github, href: 'https://github.com/mishabvibes', label: 'GITHUB', handle: 'mishabvibes' },
-  { icon: Linkedin, href: 'https://linkedin.com/in/muhammed-mishab-71311034a', label: 'LINKEDIN', handle: 'mishab' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammed-mishab-nk/', label: 'LINKEDIN', handle: 'mishab' },
   { icon: Instagram, href: 'https://instagram.com/heymishab', label: 'INSTAGRAM', handle: '@heymishab' },
   { icon: Mail, href: 'mailto:mishabvibes@gmail.com', label: 'EMAIL', handle: 'mishabvibes@gmail.com' },
 ]

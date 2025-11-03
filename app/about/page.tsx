@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState, useMemo, lazy, Suspense } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Section } from '@/components/ui/section'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +11,11 @@ import { useIntersectionObserver } from '@/lib/hooks/use-intersection-observer'
 import { Terminal, TypingAnimation, AnimatedSpan } from '@/components/ui/terminal'
 import HolographicCard from '@/components/ui/holographic-card'
 import Image from 'next/image'
-import ShaderBackground from '@/components/ui/shader-background'
+
+// Lazy load heavy shader background
+const ShaderBackground = lazy(() => 
+  import('@/components/ui/shader-background').then(module => ({ default: module.default }))
+)
 
 /**
  * About Page - Mishab's Story
@@ -97,13 +102,13 @@ function SkillBar({ name, level, category, icon, delay }: { name: string; level:
         <motion.div
           initial={{ width: 0 }}
           animate={isVisible ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1, delay, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: Math.min(delay, 0.2), ease: 'easeOut' }}
           className="h-full bg-gradient-to-r from-primary via-purple-500 to-pink-500 rounded-full relative overflow-hidden"
         >
           <motion.div
             className="absolute inset-0 bg-white/30"
             animate={{ x: ['-100%', '100%'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear', repeatDelay: 0 }}
             style={{ width: '50%' }}
           />
         </motion.div>
@@ -113,10 +118,14 @@ function SkillBar({ name, level, category, icon, delay }: { name: string; level:
 }
 
 export default function AboutPage() {
+  const prefersReducedMotion = useReducedMotion()
+  
   return (
     <>
-      {/* Shader Background - Animated plasma effect */}
-      <ShaderBackground />
+      {/* Shader Background - Lazy loaded for better performance */}
+      <Suspense fallback={<div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 -z-10" />}>
+        <ShaderBackground />
+      </Suspense>
       
       <div className="container mx-auto px-4 py-16">
         {/* Hero Section */}

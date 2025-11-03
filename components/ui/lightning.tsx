@@ -161,7 +161,29 @@ const Lightning: React.FC<LightningProps> = ({ hue = 120, xOffset = 0, speed = 1
     const uSizeLocation = gl.getUniformLocation(program, 'uSize');
 
     const startTime = performance.now();
+    let rafId: number
+    let frameSkip = false
+    let isVisible = true
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
     const render = () => {
+      // Skip if tab is hidden
+      if (!isVisible) {
+        rafId = requestAnimationFrame(render)
+        return
+      }
+
+      // Throttle to 30fps
+      frameSkip = !frameSkip
+      if (frameSkip) {
+        rafId = requestAnimationFrame(render)
+        return
+      }
+
       resizeCanvas();
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
@@ -173,12 +195,14 @@ const Lightning: React.FC<LightningProps> = ({ hue = 120, xOffset = 0, speed = 1
       gl.uniform1f(uIntensityLocation, intensity);
       gl.uniform1f(uSizeLocation, size);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(render);
+      rafId = requestAnimationFrame(render);
     };
-    requestAnimationFrame(render);
+    rafId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [hue, xOffset, speed, intensity, size]);
 

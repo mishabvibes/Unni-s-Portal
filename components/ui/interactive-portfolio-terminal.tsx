@@ -170,7 +170,7 @@ Current Focus:
 
 📧 Email: mishabvibes@gmail.com
 🐙 GitHub: https://github.com/mishabvibes
-💼 LinkedIn: https://linkedin.com/in/muhammed-mishab-71311034a
+💼 LinkedIn: https://www.linkedin.com/in/muhammed-mishab-nk/
 📸 Instagram: https://instagram.com/heymishab
 🌐 Portfolio: https://mishabvibes.github.io
 📍 Location: Palakkad, Kerala, India

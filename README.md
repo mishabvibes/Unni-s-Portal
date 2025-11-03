@@ -7,7 +7,7 @@
 **Full-Stack Alchemist 🧪 | Web Magician ✨ | Code Connoisseur ☕**
 
 [![GitHub](https://img.shields.io/badge/GitHub-mishabvibes-181717?logo=github)](https://github.com/mishabvibes)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-muhammed--mishab-0A66C2?logo=linkedin)](https://linkedin.com/in/muhammed-mishab-71311034a)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-muhammed--mishab-0A66C2?logo=linkedin)](https://www.linkedin.com/in/muhammed-mishab-nk/)
 [![Instagram](https://img.shields.io/badge/Instagram-@heymishab-E4405F?logo=instagram)](https://instagram.com/heymishab)
 
 </div>
@@ -140,7 +140,7 @@ Set up with [Formspree](https://formspree.io):
 
 - **Email**: [mishabvibes@gmail.com](mailto:mishabvibes@gmail.com)
 - **GitHub**: [@mishabvibes](https://github.com/mishabvibes)
-- **LinkedIn**: [muhammed-mishab](https://linkedin.com/in/muhammed-mishab-71311034a)
+- **LinkedIn**: [muhammed-mishab-nk](https://www.linkedin.com/in/muhammed-mishab-nk/)
 - **Instagram**: [@heymishab](https://instagram.com/heymishab)
 - **Location**: Palakkad, Kerala, India 🇮🇳
 
