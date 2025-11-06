@@ -282,6 +282,12 @@ export default function RootLayout({
                 '@type': 'Person',
                 name: 'Mishab NK',
               },
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Palakkad',
+                addressRegion: 'Kerala',
+                addressCountry: 'India',
+              },
               areaServed: {
                 '@type': 'Country',
                 name: 'India',
