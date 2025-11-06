@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     url: 'https://heymishab.vercel.app',
     title: 'Mishab NK | Professional Full-Stack Developer | React, Next.js & Django',
     description: 'Professional Full-Stack Developer with 3+ years experience. Specializing in React, Next.js, Django, TypeScript. Building scalable web applications. Available for freelance projects.',
-    siteName: 'Mishab NK - Full-Stack Developer Portfolio',
+    siteName: 'Mishab NK',
     images: [
       {
         url: '/og-image.jpg',
@@ -135,7 +135,11 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
     other: [
@@ -160,10 +164,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Favicon */}
+        {/* Favicon - Multiple formats for better compatibility */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         
         {/* JSON-LD Structured Data for SEO */}
         <script
@@ -216,15 +222,51 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              name: 'Mishab NK Portfolio',
-              alternateName: 'Mishab NK - Full-Stack Developer',
+              name: 'Mishab NK',
+              alternateName: 'Mishab NK - Full-Stack Developer Portfolio',
               url: 'https://heymishab.vercel.app',
               description: 'Professional portfolio of Mishab NK, a Full-Stack Developer specializing in React, Next.js, and Django',
               author: {
                 '@type': 'Person',
                 name: 'Mishab NK',
               },
+              publisher: {
+                '@type': 'Person',
+                name: 'Mishab NK',
+              },
               inLanguage: 'en-US',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://heymishab.vercel.app/search?q={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Mishab NK',
+              alternateName: 'Mishab NK - Full-Stack Developer',
+              url: 'https://heymishab.vercel.app',
+              logo: 'https://heymishab.vercel.app/favicon.ico',
+              image: 'https://heymishab.vercel.app/og-image.jpg',
+              description: 'Professional Full-Stack Developer specializing in React, Next.js, Django, and TypeScript',
+              founder: {
+                '@type': 'Person',
+                name: 'Mishab NK',
+              },
+              sameAs: [
+                'https://github.com/mishabvibes',
+                'https://www.linkedin.com/in/muhammed-mishab-nk/',
+                'https://twitter.com/mishabvibes',
+              ],
             }),
           }}
         />
